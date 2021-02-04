@@ -69,7 +69,7 @@ class LandContract extends Contract {
             village,
             subDistrict,
             district,
-            village,
+            state,
         ]);
 
         let land: Land = await ctx.landList.getLand(landKey);
