@@ -1,16 +1,16 @@
 import { State } from './ledger-api/state';
 
-interface IOwner {
+export interface IOwner {
     khataNo: Number;
     name: String;
 }
 
-interface IPoint {
+export interface IPoint {
     lat: Number;
     long: Number;
 }
 
-interface ILand {
+export interface ILand {
     khasraNo: String;
     village: String;
     subDistrict: String;
@@ -67,5 +67,27 @@ export class Land extends State {
 
     static getClass() {
         return 'landRecord';
+    }
+
+    static createInstance(
+        khasraNo: String,
+        village: String,
+        subDistrict: String,
+        district: String,
+        state: String,
+        polygonPoints: Array<IPoint>,
+        area: Number,
+        owner: IOwner,
+    ) {
+        return new Land({
+            khasraNo,
+            village,
+            subDistrict,
+            district,
+            state,
+            polygonPoints,
+            area,
+            owner,
+        });
     }
 }
