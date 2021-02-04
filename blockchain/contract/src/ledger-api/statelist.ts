@@ -46,7 +46,10 @@ export class StateList {
         );
         let data = await this.ctx.stub.getState(ledgerKey);
         if (data && (data as Buffer).toString('utf8')) {
-            let state = State.deserialize(data, this.supportedClasses);
+            let state = State.deserialize(
+                data as Buffer,
+                this.supportedClasses,
+            );
             return state;
         } else {
             return null;

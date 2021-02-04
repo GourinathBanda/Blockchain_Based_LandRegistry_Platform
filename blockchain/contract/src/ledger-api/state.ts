@@ -54,7 +54,7 @@ export class State {
      * @param (supportedClasses) the set of classes data can be serialized to
      * @return {json} json with the data to store
      */
-    static deserialize(data: any, supportedClasses: any) {
+    static deserialize(data: Buffer, supportedClasses: any) {
         let json = JSON.parse(data.toString());
         let objClass = supportedClasses[json.class];
         if (!objClass) {
