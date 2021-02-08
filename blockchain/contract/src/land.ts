@@ -19,6 +19,8 @@ export interface ILand {
     polygonPoints: Array<IPoint>;
     area: Number;
     owner: IOwner;
+    parentLandKey: String;
+    expired: Boolean;
 }
 
 export class Land extends State {
@@ -29,6 +31,8 @@ export class Land extends State {
     private polygonPoints: Array<IPoint>;
     private area: Number;
     private owner: IOwner;
+    private parentLandKey: String;
+    private expired: Boolean;
 
     constructor(obj: ILand) {
         super(Land.getClass(), [
@@ -78,6 +82,8 @@ export class Land extends State {
         polygonPoints: Array<IPoint>,
         area: Number,
         owner: IOwner,
+        parentLandKey: String | null = null,
+        expired: Boolean = false,
     ) {
         return new Land({
             khasraNo,
@@ -88,6 +94,8 @@ export class Land extends State {
             polygonPoints,
             area,
             owner,
+            parentLandKey,
+            expired,
         });
     }
 }

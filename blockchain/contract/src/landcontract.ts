@@ -31,6 +31,7 @@ class LandContract extends Contract {
         area: Number,
         khataNo: Number,
         ownerName: String,
+        parentLandKey: String | null = null,
     ) {
         let owner: IOwner = { khataNo: khataNo, name: ownerName };
 
@@ -43,6 +44,7 @@ class LandContract extends Contract {
             polygonPoints,
             area,
             owner,
+            parentLandKey,
         );
 
         await ctx.landList.addLand(land);
