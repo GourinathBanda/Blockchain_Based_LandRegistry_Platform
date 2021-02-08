@@ -2,6 +2,7 @@ import { Contract, Context } from 'fabric-contract-api';
 import { IPoint, IOwner, Land } from './land';
 import { LandList } from './landlist';
 import { QueryUtils } from './queryutils';
+import { LISTNAME } from './constants';
 
 class LandContext extends Context {
     public landList: LandList;
@@ -157,5 +158,24 @@ class LandContract extends Contract {
         await ctx.landList.addLand(landB);
 
         return [landA, landB];
+    }
+
+    async getOwnershipHistory(
+        ctx: LandContext,
+        khasraNo: string,
+        village: string,
+        subDistrict: string,
+        district: string,
+        state: string,
+    ) {
+        let query = new QueryUtils(ctx, LISTNAME);
+        let results = await query.getAssetHistory(
+            khasraNo,
+            village,
+            subDistrict,
+            district,
+            state,
+        );
+        return results;
     }
 }
