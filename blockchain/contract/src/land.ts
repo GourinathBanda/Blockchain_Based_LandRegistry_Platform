@@ -2,7 +2,7 @@ import { State } from './ledger-api/state';
 
 export interface IOwner {
     khataNo: Number;
-    name: String;
+    name: string;
 }
 
 export interface IPoint {
@@ -11,27 +11,27 @@ export interface IPoint {
 }
 
 export interface ILand {
-    khasraNo: String;
-    village: String;
-    subDistrict: String;
-    district: String;
-    state: String;
+    khasraNo: string;
+    village: string;
+    subDistrict: string;
+    district: string;
+    state: string;
     polygonPoints: Array<IPoint>;
     area: Number;
     owner: IOwner;
-    parentLandKey: String;
+    parentLandKey: string;
     expired: Boolean;
 }
 
 export class Land extends State {
-    private khasraNo: String;
-    private village: String;
-    private subDistrict: String;
-    private state: String;
+    private khasraNo: string;
+    private village: string;
+    private subDistrict: string;
+    private state: string;
     private polygonPoints: Array<IPoint>;
     private area: Number;
     private owner: IOwner;
-    private parentLandKey: String;
+    private parentLandKey: string;
     private expired: Boolean;
 
     constructor(obj: ILand) {
@@ -82,15 +82,15 @@ export class Land extends State {
     }
 
     static createInstance(
-        khasraNo: String,
-        village: String,
-        subDistrict: String,
-        district: String,
-        state: String,
+        khasraNo: string,
+        village: string,
+        subDistrict: string,
+        district: string,
+        state: string,
         polygonPoints: Array<IPoint>,
         area: Number,
         owner: IOwner,
-        parentLandKey: String | null = null,
+        parentLandKey: string | null = null,
         expired: Boolean = false,
     ) {
         return new Land({

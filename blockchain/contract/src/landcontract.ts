@@ -1,6 +1,7 @@
 import { Contract, Context } from 'fabric-contract-api';
 import { IPoint, IOwner, Land } from './land';
 import { LandList } from './landlist';
+import { QueryUtils } from './queryutils';
 
 class LandContext extends Context {
     public landList: LandList;
@@ -22,15 +23,15 @@ class LandContract extends Contract {
 
     async createLand(
         ctx: LandContext,
-        khasraNo: String,
-        village: String,
-        subDistrict: String,
-        district: String,
-        state: String,
+        khasraNo: string,
+        village: string,
+        subDistrict: string,
+        district: string,
+        state: string,
         polygonPoints: Array<IPoint>,
         area: Number,
         khataNo: Number,
-        ownerName: String,
+        ownerName: string,
     ) {
         let owner: IOwner = { khataNo: khataNo, name: ownerName };
 
@@ -52,15 +53,15 @@ class LandContract extends Contract {
 
     async transferLand(
         ctx: LandContext,
-        khasraNo: String,
-        village: String,
-        subDistrict: String,
-        district: String,
-        state: String,
+        khasraNo: string,
+        village: string,
+        subDistrict: string,
+        district: string,
+        state: string,
         currentKhataNo: Number,
-        currentOwnerName: String,
+        currentOwnerName: string,
         newKhataNo: Number,
-        newOwnerName: String,
+        newOwnerName: string,
         price: Number,
         transferDataTime: Date,
     ) {
@@ -99,15 +100,15 @@ class LandContract extends Contract {
 
     async splitLand(
         ctx: LandContext,
-        khasraNo: String,
-        village: String,
-        subDistrict: String,
-        district: String,
-        state: String,
-        newKhasraNoA: String,
+        khasraNo: string,
+        village: string,
+        subDistrict: string,
+        district: string,
+        state: string,
+        newKhasraNoA: string,
         newPolygonPointsA: Array<IPoint>,
         areaA: Number,
-        newKhasraNoB: String,
+        newKhasraNoB: string,
         newPolygonPointsB: Array<IPoint>,
         areaB: Number,
     ) {
