@@ -45,6 +45,14 @@ export class Land extends State {
         Object.assign(this, obj);
     }
 
+    isExpired() {
+        return this.expired;
+    }
+
+    setExpired() {
+        this.expired = true;
+    }
+
     getOwner() {
         return this.owner;
     }

@@ -31,7 +31,6 @@ class LandContract extends Contract {
         area: Number,
         khataNo: Number,
         ownerName: String,
-        parentLandKey: String | null = null,
     ) {
         let owner: IOwner = { khataNo: khataNo, name: ownerName };
 
@@ -44,7 +43,6 @@ class LandContract extends Contract {
             polygonPoints,
             area,
             owner,
-            parentLandKey,
         );
 
         await ctx.landList.addLand(land);
@@ -80,6 +78,10 @@ class LandContract extends Contract {
             name: currentOwnerName,
         };
 
+        if (land.isExpired()) {
+            throw new Error('\nCannot split land, land record is expired');
+        }
+
         if (land.getOwner() !== currentOwner) {
             throw new Error('\nLand is not owned by ' + currentOwnerName);
         }
@@ -93,5 +95,66 @@ class LandContract extends Contract {
 
         await ctx.landList.updateLand(land);
         return land;
+    }
+
+    async splitLand(
+        ctx: LandContext,
+        khasraNo: String,
+        village: String,
+        subDistrict: String,
+        district: String,
+        state: String,
+        newKhasraNoA: String,
+        newPolygonPointsA: Array<IPoint>,
+        areaA: Number,
+        newKhasraNoB: String,
+        newPolygonPointsB: Array<IPoint>,
+        areaB: Number,
+    ) {
+        let landKey = Land.makeKey([
+            khasraNo,
+            village,
+            subDistrict,
+            district,
+            state,
+        ]);
+
+        let land: Land = await ctx.landList.getLand(landKey);
+
+        if (land.isExpired()) {
+            throw new Error('\nCannot split land, land record is expired');
+        }
+
+        land.setExpired();
+
+        let landA: Land = Land.createInstance(
+            newKhasraNoA,
+            village,
+            subDistrict,
+            district,
+            state,
+            newPolygonPointsA,
+            areaA,
+            land.getOwner(),
+            landKey,
+        );
+
+        let landB: Land = Land.createInstance(
+            newKhasraNoB,
+            village,
+            subDistrict,
+            district,
+            state,
+            newPolygonPointsB,
+            areaB,
+            land.getOwner(),
+            landKey,
+        );
+
+        await ctx.landList.updateLand(land);
+        await ctx.landList.addLand(landA);
+        await ctx.landList.addLand(landB);
+
+        return [landA, landB];
     }
 }
