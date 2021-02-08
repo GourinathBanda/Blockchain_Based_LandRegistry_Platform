@@ -67,11 +67,11 @@ class LandContract extends Contract {
         transferDataTime: Date,
     ) {
         let landKey = Land.makeKey([
-            khasraNo,
-            village,
-            subDistrict,
-            district,
             state,
+            district,
+            subDistrict,
+            village,
+            khasraNo,
         ]);
 
         let land: Land = await ctx.landList.getLand(landKey);
@@ -114,11 +114,11 @@ class LandContract extends Contract {
         areaB: Number,
     ) {
         let landKey = Land.makeKey([
-            khasraNo,
-            village,
-            subDistrict,
-            district,
             state,
+            district,
+            subDistrict,
+            village,
+            khasraNo,
         ]);
 
         let land: Land = await ctx.landList.getLand(landKey);
@@ -176,6 +176,23 @@ class LandContract extends Contract {
             district,
             state,
         );
+        return results;
+    }
+
+    async getAllRecordsInVillage(
+        ctx: LandContext,
+        village: string,
+        subDistrict: string,
+        district: string,
+        state: string,
+    ) {
+        let query = new QueryUtils(ctx, LISTNAME);
+        let results = await query.getAllRecordsByPartialKey([
+            state,
+            district,
+            subDistrict,
+            village,
+        ]);
         return results;
     }
 }

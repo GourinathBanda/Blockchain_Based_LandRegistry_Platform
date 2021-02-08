@@ -19,11 +19,11 @@ export class QueryUtils {
         state: string,
     ) {
         let ledgerKey = await this.ctx.stub.createCompositeKey(this.name, [
-            khasraNo,
-            village,
-            subDistrict,
-            district,
             state,
+            district,
+            subDistrict,
+            village,
+            khasraNo,
         ]);
 
         const resultsIterator = await this.ctx.stub.getHistoryForKey(ledgerKey);

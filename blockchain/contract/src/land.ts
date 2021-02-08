@@ -36,11 +36,11 @@ export class Land extends State {
 
     constructor(obj: ILand) {
         super(Land.getClass(), [
-            obj.khasraNo,
-            obj.village,
-            obj.subDistrict,
-            obj.district,
             obj.state,
+            obj.district,
+            obj.subDistrict,
+            obj.village,
+            obj.khasraNo,
         ]);
         Object.assign(this, obj);
     }
