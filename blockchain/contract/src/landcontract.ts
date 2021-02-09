@@ -169,13 +169,36 @@ class LandContract extends Contract {
         state: string,
     ) {
         let query = new QueryUtils(ctx, LISTNAME);
-        let results = await query.getAssetHistory(
-            khasraNo,
-            village,
-            subDistrict,
-            district,
+        let results: Array<any> = [];
+
+        let landKey = Land.makeKey([
             state,
-        );
+            district,
+            subDistrict,
+            village,
+            khasraNo,
+        ]);
+
+        let land: Land = await ctx.landList.getLand(landKey);
+
+        while (true) {
+            let result = await query.getAssetHistory(
+                land.getKhasraNo(),
+                land.getVillage(),
+                land.getSubDistrict(),
+                land.getDistrict(),
+                land.getState(),
+            );
+
+            results.push(result);
+
+            if (land.getParentLandKey() == null) {
+                break;
+            }
+
+            land = await ctx.landList.getLand(land.getParentLandKey());
+        }
+
         return results;
     }
 

@@ -27,11 +27,12 @@ export class Land extends State {
     private khasraNo: string;
     private village: string;
     private subDistrict: string;
+    private district: string;
     private state: string;
     private polygonPoints: Array<IPoint>;
     private area: Number;
     private owner: IOwner;
-    private parentLandKey: string;
+    private parentLandKey: string | null;
     private expired: Boolean;
 
     constructor(obj: ILand) {
@@ -45,12 +46,36 @@ export class Land extends State {
         Object.assign(this, obj);
     }
 
+    getKhasraNo() {
+        return this.khasraNo;
+    }
+
+    getVillage() {
+        return this.village;
+    }
+
+    getSubDistrict() {
+        return this.subDistrict;
+    }
+
+    getDistrict() {
+        return this.district;
+    }
+
+    getState() {
+        return this.state;
+    }
+
     isExpired() {
         return this.expired;
     }
 
     setExpired() {
         this.expired = true;
+    }
+
+    getParentLandKey() {
+        return this.parentLandKey;
     }
 
     getOwner() {
