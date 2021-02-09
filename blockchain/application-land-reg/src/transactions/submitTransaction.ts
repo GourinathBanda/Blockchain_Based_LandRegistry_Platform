@@ -2,12 +2,11 @@ import fs from 'fs';
 import yaml from 'js-yaml';
 import path from 'path';
 import { Wallets, Gateway } from 'fabric-network';
-import { Land } from '../../contract/src/land';
 
 export async function submitTransaction(txnName: string, args: Array<any>) {
     const walletPath = path.join(
         process.cwd(),
-        '../identity/user/landRegDept/wallet',
+        '../../identity/user/landRegDept/wallet',
     );
     const wallet = await Wallets.newFileSystemWallet(walletPath);
 
@@ -17,7 +16,7 @@ export async function submitTransaction(txnName: string, args: Array<any>) {
         const userName = 'landRegDept';
 
         let connectionProfile: any = yaml.load(
-            fs.readFileSync('../gateway/connection-org1.yaml', 'utf8'),
+            fs.readFileSync('../../gateway/connection-org1.yaml', 'utf8'),
         );
         let connectionOptions = {
             identity: userName,
