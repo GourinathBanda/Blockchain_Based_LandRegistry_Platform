@@ -1,31 +1,12 @@
 import inquirer from 'inquirer';
 import { addLand } from '../transactions/addLand';
 import { IPoint } from '../../../contract/src/land';
-
-function validateEmpty() {
-    return {
-        validate: (input: string) => {
-            if (!input || 0 === input.length) {
-                return 'Input cannot be empty';
-            }
-            return true;
-        },
-    };
-}
-
-function validateNumbers() {
-    return {
-        validate: (input: string) => {
-            const numberInput = Number(input);
-
-            if (0 === input.length || isNaN(numberInput) || numberInput < 0) {
-                return 'Enter a valid number';
-            }
-
-            return true;
-        },
-    };
-}
+import {
+    validateEmpty,
+    validateNumbers,
+    getIPointArray,
+    getPointQuestions,
+} from './utils';
 
 export async function promptAddLand() {
     const quesListAddLand = [
@@ -81,34 +62,10 @@ export async function promptAddLand() {
 
     let results = await inquirer.prompt(quesListAddLand);
 
-    let quesPolyPtsAr = [];
-    for (let i = 0; i < Number(results.numPts); i++) {
-        const quesPolyPts = [
-            {
-                type: 'text',
-                name: 'lat' + i.toString(),
-                message: 'Enter Latitude',
-                ...validateNumbers(),
-            },
-            {
-                type: 'text',
-                name: 'long' + i.toString(),
-                message: 'Enter Longitude',
-                ...validateNumbers(),
-            },
-        ];
-        quesPolyPtsAr.push(...quesPolyPts);
-    }
+    let quesPolyPtsAr = getPointQuestions(results.numPts);
 
     let ptsAnswers = await inquirer.prompt(quesPolyPtsAr);
-    let pts: Array<IPoint> = [];
-
-    for (let i = 0; i < Number(results.numPts); i++) {
-        pts.push({
-            lat: ptsAnswers['lat' + i.toString()],
-            long: ptsAnswers['long' + i.toString()],
-        });
-    }
+    let pts: Array<IPoint> = getIPointArray(ptsAnswers);
 
     console.log(pts);
 
