@@ -65,7 +65,7 @@ export async function promptAddLand() {
     let quesPolyPtsAr = getPointQuestions(results.numPts);
 
     let ptsAnswers = await inquirer.prompt(quesPolyPtsAr);
-    let pts: Array<IPoint> = getIPointArray(ptsAnswers);
+    let pts: Array<IPoint> = getIPointArray(ptsAnswers, results.numPts);
 
     console.log(pts);
 

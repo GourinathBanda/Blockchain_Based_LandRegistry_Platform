@@ -25,12 +25,13 @@ export function validateNumbers() {
     };
 }
 
-export function getIPointArray(promptAns: { [key: string]: any }) {
+export function getIPointArray(
+    promptAns: { [key: string]: any },
+    pointCnt: Number,
+) {
     let pts: Array<IPoint> = [];
 
-    let n = promptAns.length / 2;
-
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < pointCnt; i++) {
         pts.push({
             lat: promptAns['lat' + i.toString()],
             long: promptAns['long' + i.toString()],
