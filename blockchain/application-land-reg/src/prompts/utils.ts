@@ -22,6 +22,15 @@ export function validateNumbers() {
 
             return true;
         },
+        filter: (input: string) => {
+            const numberInput = Number(input);
+
+            if (0 === input.length || isNaN(numberInput) || numberInput < 0) {
+                return input;
+            }
+
+            return numberInput;
+        },
     };
 }
 
