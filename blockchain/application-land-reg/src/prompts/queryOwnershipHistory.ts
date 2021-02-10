@@ -1,9 +1,14 @@
 import inquirer from 'inquirer';
-import { queryAllVillageRecords } from '../transactions/queryAllVillageRecords';
+import { queryOwnershipHistory } from '../transactions/queryOwnershipHistory';
 import { validateEmpty } from './utils';
 
-export async function promptQueryVillage() {
+export async function promptOwnershipHistory() {
     const quesList = [
+        {
+            name: 'khasraNo',
+            message: 'Enter Khasra Number',
+            ...validateEmpty(),
+        },
         {
             name: 'village',
             message: 'Enter Village',
@@ -28,7 +33,8 @@ export async function promptQueryVillage() {
 
     let results = await inquirer.prompt(quesList);
 
-    await queryAllVillageRecords(
+    await queryOwnershipHistory(
+        results.khasraNo,
         results.village,
         results.subDistrict,
         results.district,
