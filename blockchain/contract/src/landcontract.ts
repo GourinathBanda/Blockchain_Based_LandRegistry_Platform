@@ -85,7 +85,7 @@ export class LandContract extends Contract {
             throw new Error('\nCannot split land, land record is expired');
         }
 
-        if (land.isOwner(currentOwner)) {
+        if (!land.isOwner(currentOwner)) {
             throw new Error('\nLand is not owned by ' + currentOwnerName);
         }
 
