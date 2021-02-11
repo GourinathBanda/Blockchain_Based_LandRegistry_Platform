@@ -12,13 +12,16 @@ export async function addLand(
     khataNo: Number,
     ownerName: string,
 ) {
+    let pts = {
+        points: polygonPoints,
+    };
     await submitTransaction('createLand', [
         khasraNo,
         village,
         subDistrict,
         district,
         state,
-        polygonPoints,
+        JSON.stringify(pts),
         area,
         khataNo,
         ownerName,

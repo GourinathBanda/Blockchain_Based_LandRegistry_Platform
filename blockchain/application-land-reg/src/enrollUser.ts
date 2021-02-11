@@ -25,15 +25,15 @@ export async function enrollUser() {
 
         const walletPath = path.join(
             process.cwd(),
-            '../identity/user/landRegDept/wallet',
+            '../identity/user/isabella/wallet',
         );
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
-        const userExists = await wallet.get('landRegDept');
+        const userExists = await wallet.get('isabella');
         if (userExists) {
             console.log(
-                'An identity for the client user "landRegDept" already exists in the wallet',
+                'An identity for the client user "isabella" already exists in the wallet',
             );
             return;
         }
@@ -47,15 +47,15 @@ export async function enrollUser() {
                 certificate: enrollment.certificate,
                 privateKey: enrollment.key.toBytes(),
             },
-            mspId: 'Org1MSP',
+            mspId: 'Org2MSP',
             type: 'X.509',
         };
-        await wallet.put('landRegDept', x509Identity);
+        await wallet.put('isabella', x509Identity);
         console.log(
-            'Successfully enrolled client user "landRegDept" and imported it into the wallet',
+            'Successfully enrolled client user "isabella" and imported it into the wallet',
         );
     } catch (error) {
-        console.error(`Failed to enroll client user "landRegDept": ${error}`);
+        console.error(`Failed to enroll client user "isabella": ${error}`);
         process.exit(1);
     }
 }

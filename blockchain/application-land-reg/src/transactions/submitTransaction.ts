@@ -6,14 +6,14 @@ import { Wallets, Gateway } from 'fabric-network';
 export async function submitTransaction(txnName: string, args: Array<any>) {
     const walletPath = path.join(
         process.cwd(),
-        '../identity/user/landRegDept/wallet',
+        '../identity/user/isabella/wallet',
     );
     const wallet = await Wallets.newFileSystemWallet(walletPath);
 
     const gateway = new Gateway();
 
     try {
-        const userName = 'landRegDept';
+        const userName = 'isabella';
         const yamlFile = path.join(
             process.cwd(),
             '../gateway/connection-org2.yaml',
@@ -48,7 +48,7 @@ export async function submitTransaction(txnName: string, args: Array<any>) {
 
         console.log('Transaction Response :-');
 
-        console.log(response);
+        console.log(JSON.stringify(JSON.parse(response.toString()), null, 4));
     } catch (error) {
         console.log(`Error processing transaction. ${error}`);
         console.log(error.stack);
