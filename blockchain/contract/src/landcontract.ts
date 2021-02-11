@@ -13,7 +13,7 @@ class LandContext extends Context {
     }
 }
 
-class LandContract extends Contract {
+export class LandContract extends Contract {
     constructor() {
         super('landContract');
     }

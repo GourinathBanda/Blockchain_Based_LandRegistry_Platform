@@ -6,12 +6,16 @@ import path from 'path';
 
 export async function enrollUser() {
     try {
+        const yamlFile = path.join(
+            process.cwd(),
+            '../gateway/connection-org2.yaml',
+        );
         let connectionProfile: any = yaml.load(
-            fs.readFileSync('../gateway/connection-org1.yaml', 'utf8'),
+            fs.readFileSync(yamlFile, 'utf8'),
         );
 
         const caInfo =
-            connectionProfile.certificateAuthorities['ca.org1.example.com'];
+            connectionProfile.certificateAuthorities['ca.org2.example.com'];
         const caTLSCACerts = caInfo.tlsCACerts.pem;
         const ca = new FabricCAServices(
             caInfo.url,
@@ -55,3 +59,4 @@ export async function enrollUser() {
         process.exit(1);
     }
 }
+enrollUser();
