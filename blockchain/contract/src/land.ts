@@ -78,6 +78,13 @@ export class Land extends State {
         return this.parentLandKey;
     }
 
+    isOwner(owner: IOwner) {
+        return (
+            owner.khataNo === this.owner.khataNo &&
+            owner.name === this.owner.name
+        );
+    }
+
     getOwner() {
         return this.owner;
     }

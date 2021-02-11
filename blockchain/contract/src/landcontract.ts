@@ -29,27 +29,28 @@ export class LandContract extends Contract {
         subDistrict: string,
         district: string,
         state: string,
-        polygonPoints: Array<IPoint>,
-        area: Number,
-        khataNo: Number,
+        polygonPoints: string,
+        area: string,
+        khataNo: string,
         ownerName: string,
     ) {
-        let owner: IOwner = { khataNo: khataNo, name: ownerName };
-
+        let owner: IOwner = { khataNo: Number(khataNo), name: ownerName };
+        let pts = JSON.parse(polygonPoints);
+        pts = pts.points;
         let land: Land = Land.createInstance(
             khasraNo,
             village,
             subDistrict,
             district,
             state,
-            polygonPoints,
-            area,
+            pts,
+            Number(area),
             owner,
         );
 
         await ctx.landList.addLand(land);
 
-        return land;
+        return JSON.stringify(land);
     }
 
     async transferLand(
@@ -59,11 +60,11 @@ export class LandContract extends Contract {
         subDistrict: string,
         district: string,
         state: string,
-        currentKhataNo: Number,
+        currentKhataNo: string,
         currentOwnerName: string,
-        newKhataNo: Number,
+        newKhataNo: string,
         newOwnerName: string,
-        price: Number,
+        price: string,
         transferDataTime: Date,
     ) {
         let landKey = Land.makeKey([
@@ -76,7 +77,7 @@ export class LandContract extends Contract {
 
         let land: Land = await ctx.landList.getLand(landKey);
         let currentOwner: IOwner = {
-            khataNo: currentKhataNo,
+            khataNo: Number(currentKhataNo),
             name: currentOwnerName,
         };
 
@@ -84,19 +85,19 @@ export class LandContract extends Contract {
             throw new Error('\nCannot split land, land record is expired');
         }
 
-        if (land.getOwner() !== currentOwner) {
+        if (land.isOwner(currentOwner)) {
             throw new Error('\nLand is not owned by ' + currentOwnerName);
         }
 
         let newOwner: IOwner = {
-            khataNo: newKhataNo,
+            khataNo: Number(newKhataNo),
             name: newOwnerName,
         };
 
         land.setOwner(newOwner);
 
         await ctx.landList.updateLand(land);
-        return land;
+        return JSON.stringify(land);
     }
 
     async splitLand(
@@ -157,7 +158,7 @@ export class LandContract extends Contract {
         await ctx.landList.addLand(landA);
         await ctx.landList.addLand(landB);
 
-        return [landA, landB];
+        return JSON.stringify([landA, landB]);
     }
 
     async getOwnershipHistory(
@@ -199,7 +200,7 @@ export class LandContract extends Contract {
             land = await ctx.landList.getLand(land.getParentLandKey());
         }
 
-        return results;
+        return JSON.stringify(results);
     }
 
     async getAllRecordsInVillage(
@@ -216,6 +217,7 @@ export class LandContract extends Contract {
             subDistrict,
             village,
         ]);
-        return results;
+        console.log(results);
+        return JSON.stringify(results);
     }
 }
