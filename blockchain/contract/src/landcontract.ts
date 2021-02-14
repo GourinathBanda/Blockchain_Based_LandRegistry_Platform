@@ -203,7 +203,7 @@ export class LandContract extends Contract {
                 land.getState(),
             );
 
-            results.push(result);
+            results.push([land, result]);
 
             if (land.getParentLandKey() == null) {
                 break;
