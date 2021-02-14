@@ -1,8 +1,8 @@
 import { Contract, Context } from 'fabric-contract-api';
-import { IPoint, IOwner, Land } from './land';
+import { IPoint, Land } from './land';
 import { LandList } from './landlist';
 import { QueryUtils } from './queryutils';
-import { LISTNAME } from './constants';
+import { IOwner, LANDLIST } from './constants';
 
 class LandContext extends Context {
     public landList: LandList;
@@ -169,7 +169,7 @@ export class LandContract extends Contract {
         district: string,
         state: string,
     ) {
-        let query = new QueryUtils(ctx, LISTNAME);
+        let query = new QueryUtils(ctx, LANDLIST);
         let results: Array<any> = [];
 
         let landKey = Land.makeKey([
@@ -210,7 +210,7 @@ export class LandContract extends Contract {
         district: string,
         state: string,
     ) {
-        let query = new QueryUtils(ctx, LISTNAME);
+        let query = new QueryUtils(ctx, LANDLIST);
         let results = await query.getAllRecordsByPartialKey([
             state,
             district,

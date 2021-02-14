@@ -1,9 +1,5 @@
 import { State } from './ledger-api/state';
-
-export interface IOwner {
-    khataNo: Number;
-    name: string;
-}
+import { IOwner } from './constants';
 
 export interface IPoint {
     lat: Number;

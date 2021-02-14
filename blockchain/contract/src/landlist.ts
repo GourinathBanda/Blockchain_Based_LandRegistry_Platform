@@ -1,11 +1,11 @@
 import { StateList } from './ledger-api/statelist';
 import { Land } from './land';
 import { Context } from 'fabric-contract-api';
-import { LISTNAME } from './constants';
+import { LANDLIST } from './constants';
 
 export class LandList extends StateList {
     constructor(ctx: Context) {
-        super(ctx, LISTNAME);
+        super(ctx, LANDLIST);
         this.use(Land);
     }
 
