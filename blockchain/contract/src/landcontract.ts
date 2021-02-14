@@ -1,15 +1,18 @@
 import { Contract, Context } from 'fabric-contract-api';
 import { IPoint, Land } from './land';
 import { LandList } from './landlist';
+import { LandTransferList } from './landtransferlist';
 import { QueryUtils } from './queryutils';
 import { IOwner, LANDLIST } from './constants';
 
 class LandContext extends Context {
     public landList: LandList;
+    public landTransferList: LandTransferList;
 
     constructor() {
         super();
         this.landList = new LandList(this);
+        this.landTransferList = new LandTransferList(this);
     }
 }
 
