@@ -69,7 +69,7 @@ export class LandContract extends Contract {
         newKhataNo: string,
         newOwnerName: string,
         price: string,
-        transferDateTime: Date,
+        transferDateTime: string,
     ) {
         let landKey = Land.makeKey([
             state,
@@ -102,7 +102,7 @@ export class LandContract extends Contract {
         let landTransfer: LandTransfer = LandTransfer.createInstance(
             land.getKey(),
             Number(price),
-            transferDateTime.getTime(),
+            Number(transferDateTime),
             currentOwner,
             newOwner,
         );

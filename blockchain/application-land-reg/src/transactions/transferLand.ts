@@ -24,6 +24,6 @@ export async function transferLand(
         newKhataNo,
         newOwnerName,
         price,
-        date,
+        date.getTime(),
     ]);
 }
