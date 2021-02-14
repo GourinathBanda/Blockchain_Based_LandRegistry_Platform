@@ -11,8 +11,8 @@
  * the current state is determined by the specific subclass
  */
 export class State {
-    private class: String | Object;
-    private key: String;
+    private class: string | Object;
+    private key: string;
     /**
      * @param {String|Object} class  An indentifiable class of the instance
      * @param {keyParts[]} elements to pull together to make a key for the objects

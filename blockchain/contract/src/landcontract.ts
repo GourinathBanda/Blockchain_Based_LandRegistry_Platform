@@ -3,7 +3,8 @@ import { IPoint, Land } from './land';
 import { LandList } from './landlist';
 import { LandTransferList } from './landtransferlist';
 import { QueryUtils } from './queryutils';
-import { IOwner, LANDLIST } from './constants';
+import { IOwner, LANDLIST, TRANSFERLIST } from './constants';
+import { LandTransfer } from './landtransfer';
 
 class LandContext extends Context {
     public landList: LandList;
@@ -68,7 +69,7 @@ export class LandContract extends Contract {
         newKhataNo: string,
         newOwnerName: string,
         price: string,
-        transferDataTime: Date,
+        transferDateTime: Date,
     ) {
         let landKey = Land.makeKey([
             state,
@@ -98,9 +99,17 @@ export class LandContract extends Contract {
         };
 
         land.setOwner(newOwner);
+        let landTransfer: LandTransfer = LandTransfer.createInstance(
+            land.getKey(),
+            Number(price),
+            transferDateTime.getTime(),
+            currentOwner,
+            newOwner,
+        );
 
         await ctx.landList.updateLand(land);
-        return JSON.stringify(land);
+        await ctx.landTransferList.addLandTransfer(landTransfer);
+        return JSON.stringify([land, landTransfer]);
     }
 
     async splitLand(
@@ -172,7 +181,7 @@ export class LandContract extends Contract {
         district: string,
         state: string,
     ) {
-        let query = new QueryUtils(ctx, LANDLIST);
+        let queryLandTransfer = new QueryUtils(ctx, TRANSFERLIST);
         let results: Array<any> = [];
 
         let landKey = Land.makeKey([
@@ -186,7 +195,7 @@ export class LandContract extends Contract {
         let land: Land = await ctx.landList.getLand(landKey);
 
         while (true) {
-            let result = await query.getAssetHistory(
+            let result = await queryLandTransfer.getAssetHistory(
                 land.getKhasraNo(),
                 land.getVillage(),
                 land.getSubDistrict(),

@@ -26,8 +26,11 @@ export class QueryUtils {
             khasraNo,
         ]);
 
-        const resultsIterator = await this.ctx.stub.getHistoryForKey(ledgerKey);
-        let results = await this.getAllResults(resultsIterator, true);
+        const resultsIterator = await this.ctx.stub.getStateByPartialCompositeKey(
+            this.name,
+            [state, district, subDistrict, village, khasraNo],
+        );
+        let results = await this.getAllResults(resultsIterator);
         return results;
     }
 
